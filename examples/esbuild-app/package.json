@@ -1,0 +1,17 @@
+{
+	"name": "example-esbuild-app",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "esbuild src/index.ts --bundle --minify --outdir=dist --metafile=metafile.json",
+		"test:e2e": "bun run build && bun run verify.ts"
+	},
+	"dependencies": {
+		"lodash-es": "4.17.23",
+		"metafile-codecov-bundle": "workspace:*"
+	},
+	"devDependencies": {
+		"esbuild": "0.27.3"
+	}
+}
