@@ -1,0 +1,53 @@
+{
+	"name": "metafile-codecov-bundle",
+	"version": "0.1.0",
+	"description": "Convert bun or esbuild metafile output to Codecov bundle analysis format",
+	"keywords": [
+		"bun",
+		"bundle",
+		"bundle-analysis",
+		"codecov",
+		"esbuild",
+		"metafile",
+		"size"
+	],
+	"license": "MIT",
+	"author": "Johan Bergström <bugs@bergstroem.nu>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jbergstroem/metafile-codecov-bundle.git"
+	},
+	"bin": {
+		"metafile-codecov": "./dist/cli.js"
+	},
+	"files": [
+		"dist",
+		"LICENSE",
+		"README.md"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "bun build --target=node --production --sourcemap=linked --outdir=dist index.ts src/cli.ts && tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist --skipLibCheck",
+		"prepublishOnly": "bun run build && bun test",
+		"test": "bun test",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@types/bun": "catalog:",
+		"typescript": "catalog:"
+	},
+	"engines": {
+		"bun": ">=1.1.0",
+		"node": ">=20.0.0"
+	}
+}
