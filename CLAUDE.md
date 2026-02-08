@@ -15,8 +15,7 @@ Converts bun/esbuild metafile output to Codecov bundle analysis format.
 - `bun run lint` - run oxlint + oxfmt
 - `bun run knip` - find unused code, exports, and dependencies
 - `bun run typecheck` - type check with tsc
-- `cd examples/react-app && bun run test:e2e` - run React e2e
-- `cd examples/esbuild-app && bun run test:e2e` - run esbuild e2e
+- `bun run --parallel --filter='*' test:e2e` - Run example e2e tests
 
 ## Code style
 
