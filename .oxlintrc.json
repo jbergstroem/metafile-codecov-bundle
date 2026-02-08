@@ -1,10 +1,12 @@
 {
 	"$schema": "./node_modules/oxlint/configuration_schema.json",
 	"plugins": ["import", "oxc", "typescript", "unicorn"],
+	"ignorePatterns": ["examples/**"],
 	"env": {
 		"builtin": true
 	},
 	"rules": {
+		"typescript/await-thenable": "off",
 		"typescript/no-floating-promises": "error",
 		"typescript/no-misused-promises": "error",
 		"no-await-in-loop": "error",

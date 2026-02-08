@@ -314,7 +314,7 @@ describe("runUpload", () => {
 			{ status: 403, body: "Forbidden" },
 		]);
 
-		await expect(runUpload("{}", fetcher)).rejects.toThrow("Upload failed:");
+		await expect(runUpload("{}", fetcher, 0)).rejects.toThrow("Upload failed:");
 		errorSpy.mockRestore();
 	});
 
@@ -324,7 +324,7 @@ describe("runUpload", () => {
 
 		const fetcher = makeFetcher([{ status: 403, body: "Forbidden" }]);
 
-		await expect(runUpload("{}", fetcher)).rejects.toThrow("OIDC token request failed");
+		await expect(runUpload("{}", fetcher, 0)).rejects.toThrow("OIDC token request failed");
 		errorSpy.mockRestore();
 	});
 });

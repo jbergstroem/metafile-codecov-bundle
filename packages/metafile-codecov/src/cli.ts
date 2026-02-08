@@ -103,6 +103,7 @@ export const run = (args: string[]): { json: string; output?: string; upload: bo
 export const runUpload = async (
 	payload: string,
 	fetcher?: typeof globalThis.fetch,
+	retryDelayMs?: number,
 ): Promise<void> => {
 	if (!isGitHubActions()) {
 		throw new Error("--upload is only supported in GitHub Actions");
@@ -120,6 +121,7 @@ export const runUpload = async (
 		oidcToken,
 		serviceParams,
 		fetcher,
+		retryDelayMs,
 	});
 
 	if (!result.success) {
