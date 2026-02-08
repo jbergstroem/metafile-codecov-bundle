@@ -59,10 +59,6 @@ jobs:
   e2e:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-slim
-    strategy:
-      matrix:
-        example: [react-app, esbuild-app]
-    name: e2e (${{ matrix.example }})
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -72,4 +68,4 @@ jobs:
           bun-version-file: package.json
       - run: bun ci
       - run: bun run build
-      - run: cd examples/${{ matrix.example }} && bun run test:e2e
+      - run: bun run --filter '*' --parallel test:e2e
