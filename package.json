@@ -6,16 +6,19 @@
 	],
 	"scripts": {
 		"build": "bun run --filter '*' build",
-		"lint": "oxlint --import-plugin --tsconfig=packages/metafile-codecov/tsconfig.json && oxfmt --check",
-		"lint:fix": "oxlint --fix --import-plugin --tsconfig=packages/metafile-codecov/tsconfig.json && oxfmt",
+		"lint": "oxlint --type-aware --type-check --import-plugin --tsconfig=packages/metafile-codecov/tsconfig.json && oxfmt --check",
+		"lint:fix": "oxlint --type-aware --type-check --fix --import-plugin --tsconfig=packages/metafile-codecov/tsconfig.json && oxfmt",
 		"knip": "knip",
 		"test": "bun run --filter '*' test",
 		"typecheck": "bun run --filter '*' typecheck"
 	},
 	"devDependencies": {
-		"knip": "5.83.0",
+		"@types/bun": "catalog:",
+		"@types/node": "25.2.2",
+		"knip": "5.83.1",
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "0.11.5"
 	},
 	"packageManager": "bun@1.3.8",
 	"catalog": {
