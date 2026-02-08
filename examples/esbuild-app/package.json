@@ -5,11 +5,10 @@
 	"type": "module",
 	"scripts": {
 		"build": "esbuild src/index.ts --bundle --minify --outdir=dist --metafile=metafile.json",
-		"test:e2e": "bun run build && bun run verify.ts"
+		"test:e2e": "bun run build && bun --eval 'import { verify } from \"../shared/verify\"; verify({ bundleName: \"esbuild-app\", bundler: { name: \"esbuild\", version: \"0.24.0\" }, expectedModule: \"lodash\" })'"
 	},
 	"dependencies": {
-		"lodash-es": "4.17.23",
-		"metafile-codecov-bundle": "workspace:*"
+		"lodash-es": "4.17.23"
 	},
 	"devDependencies": {
 		"esbuild": "0.27.3"

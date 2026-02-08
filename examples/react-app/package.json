@@ -5,10 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"build": "bun build --minify --outdir=dist --metafile=metafile.json ./src/index.tsx",
-		"test:e2e": "bun run build && bun run verify.ts"
+		"test:e2e": "bun run build && bun --eval 'import { verify } from \"../shared/verify\"; verify({ bundleName: \"react-app\", bundler: { name: \"bun\", version: \"1.2.0\" }, expectedModule: \"react\" })'"
 	},
 	"dependencies": {
-		"metafile-codecov-bundle": "workspace:*",
 		"react": "19.2.4",
 		"react-dom": "19.2.4"
 	}

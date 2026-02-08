@@ -27,10 +27,10 @@ const makeFetcher = (responses: Array<{ status: number; body: string }>) => {
 	const fetcher = ((url: string | URL | Request, init?: RequestInit) => {
 		const entry = responses[callIndex++];
 		calls.push({
-			url: String(url),
+			url: url instanceof Request ? url.url : url.toString(),
 			method: init?.method ?? "GET",
 			headers: Object.fromEntries(Object.entries(init?.headers ?? {})),
-			body: init?.body ? String(init.body) : null,
+			body: typeof init?.body === "string" ? init.body : null,
 		});
 		return Promise.resolve(new Response(entry.body, { status: entry.status }));
 	}) as typeof globalThis.fetch;

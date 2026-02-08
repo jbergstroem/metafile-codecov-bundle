@@ -11,6 +11,10 @@
 		},
 		"examples/esbuild-app": {
 			"project": ["**/*.ts"]
+		},
+		"examples/shared": {
+			"entry": ["verify.ts!"],
+			"project": ["**/*.ts"]
 		}
 	},
 	"ignore": ["**/dist/**"],

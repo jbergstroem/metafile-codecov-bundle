@@ -139,7 +139,7 @@ describe("fetchOidcToken", () => {
 		let capturedInit: RequestInit | undefined;
 
 		const fakeFetcher = ((url: string | URL | Request, init?: RequestInit) => {
-			capturedUrl = String(url);
+			capturedUrl = url instanceof Request ? url.url : url.toString();
 			capturedInit = init;
 			return Promise.resolve(new Response(JSON.stringify({ value: "fake-jwt-token" })));
 		}) as typeof globalThis.fetch;
@@ -155,14 +155,16 @@ describe("fetchOidcToken", () => {
 	});
 
 	test("throws when ACTIONS_ID_TOKEN_REQUEST_URL is missing", async () => {
-		const fakeFetcher = (() => Promise.resolve(new Response("{}"))) as typeof globalThis.fetch;
+		const fakeFetcher = ((_url: string | URL | Request, _init?: RequestInit) =>
+			Promise.resolve(new Response("{}"))) as typeof globalThis.fetch;
 		await expect(fetchOidcToken({}, fakeFetcher)).rejects.toThrow(
 			"ACTIONS_ID_TOKEN_REQUEST_URL is not set",
 		);
 	});
 
 	test("throws when ACTIONS_RUNTIME_TOKEN is missing", async () => {
-		const fakeFetcher = (() => Promise.resolve(new Response("{}"))) as typeof globalThis.fetch;
+		const fakeFetcher = ((_url: string | URL | Request, _init?: RequestInit) =>
+			Promise.resolve(new Response("{}"))) as typeof globalThis.fetch;
 		const env = { ACTIONS_ID_TOKEN_REQUEST_URL: "https://example.com" };
 		await expect(fetchOidcToken(env, fakeFetcher)).rejects.toThrow(
 			"ACTIONS_RUNTIME_TOKEN is not set",
@@ -170,7 +172,7 @@ describe("fetchOidcToken", () => {
 	});
 
 	test("throws on non-ok response", async () => {
-		const fakeFetcher = (() =>
+		const fakeFetcher = ((_url: string | URL | Request, _init?: RequestInit) =>
 			Promise.resolve(
 				new Response("Forbidden", { status: 403, statusText: "Forbidden" }),
 			)) as typeof globalThis.fetch;
@@ -180,7 +182,7 @@ describe("fetchOidcToken", () => {
 	});
 
 	test("throws when response missing value field", async () => {
-		const fakeFetcher = (() =>
+		const fakeFetcher = ((_url: string | URL | Request, _init?: RequestInit) =>
 			Promise.resolve(new Response(JSON.stringify({})))) as typeof globalThis.fetch;
 		await expect(fetchOidcToken(oidcEnv, fakeFetcher)).rejects.toThrow(
 			"OIDC token response missing 'value' field",

@@ -4,33 +4,17 @@
       "bytes": 172,
       "imports": [
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/client.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/client.js",
           "kind": "import-statement",
           "original": "react-dom/client"
         },
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/examples/react-app/src/app.tsx",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/examples/react-app/src/app.tsx",
           "kind": "import-statement",
           "original": "./app"
         },
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react-jsx-dev-runtime.development.js",
-          "kind": "import-statement",
-          "original": "react/jsx-dev-runtime"
-        }
-      ],
-      "format": "esm"
-    },
-    "src/app.tsx": {
-      "bytes": 257,
-      "imports": [
-        {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react.development.js",
-          "kind": "import-statement",
-          "original": "react"
-        },
-        {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react-jsx-dev-runtime.development.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react-jsx-dev-runtime.development.js",
           "kind": "import-statement",
           "original": "react/jsx-dev-runtime"
         }
@@ -41,12 +25,28 @@
       "bytes": 1373,
       "imports": [
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/cjs/react-dom-client.development.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/cjs/react-dom-client.development.js",
           "kind": "import-statement",
           "original": "./cjs/react-dom-client.development.js"
         }
       ],
       "format": "cjs"
+    },
+    "src/app.tsx": {
+      "bytes": 257,
+      "imports": [
+        {
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react.development.js",
+          "kind": "import-statement",
+          "original": "react"
+        },
+        {
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react@19.2.4/node_modules/react/cjs/react-jsx-dev-runtime.development.js",
+          "kind": "import-statement",
+          "original": "react/jsx-dev-runtime"
+        }
+      ],
+      "format": "esm"
     },
     "../../node_modules/.bun/react@19.2.4/node_modules/react/cjs/react-jsx-dev-runtime.development.js": {
       "bytes": 12056,
@@ -58,11 +58,17 @@
       ],
       "format": "cjs"
     },
+    "../../node_modules/.bun/react@19.2.4/node_modules/react/cjs/react.development.js": {
+      "bytes": 47219,
+      "imports": [
+      ],
+      "format": "cjs"
+    },
     "../../node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/cjs/react-dom-client.development.js": {
       "bytes": 1065698,
       "imports": [
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.development.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.development.js",
           "kind": "import-statement",
           "original": "scheduler"
         },
@@ -71,16 +77,10 @@
           "kind": "import-statement"
         },
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/index.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/index.js",
           "kind": "import-statement",
           "original": "react-dom"
         }
-      ],
-      "format": "cjs"
-    },
-    "../../node_modules/.bun/react@19.2.4/node_modules/react/cjs/react.development.js": {
-      "bytes": 47219,
-      "imports": [
       ],
       "format": "cjs"
     },
@@ -88,7 +88,7 @@
       "bytes": 1359,
       "imports": [
         {
-          "path": "/Users/jbergstroem/wrk/conductor/workspaces/bun-codecov/tacoma/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/cjs/react-dom.development.js",
+          "path": "/Users/jbergstroem/wrk/oss/metafile-codecov-bundle/node_modules/.bun/react-dom@19.2.4+b1ab299f0a400331/node_modules/react-dom/cjs/react-dom.development.js",
           "kind": "import-statement",
           "original": "./cjs/react-dom.development.js"
         }
