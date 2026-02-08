@@ -1,0 +1,60 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"baseBranchPatterns": ["main"],
+	"timezone": "Europe/Lisbon",
+	"schedule": ["before 9pm on sunday"],
+	"extends": [
+		":dependencyDashboard",
+		":disableRateLimiting",
+		":semanticCommits",
+		"helpers:pinGitHubActionDigests"
+	],
+	"rangeStrategy": "pin",
+	"enabledManagers": ["github-actions", "custom.regex", "npm"],
+	"commitMessageAction": "",
+	"commitMessageTopic": "{{depName}}",
+	"commitMessageExtra": "{{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}{{prettyNewMajor}}{{else}}{{#if isSingleVersion}}{{prettyNewVersion}}{{else}}{{#if newValue}}{{{newValue}}}{{else}}{{{newDigestShort}}}{{/if}}{{/if}}{{/if}}{{/if}}",
+	"packageRules": [
+		{
+			"matchManagers": ["github-actions"],
+			"commitMessageTopic": "{{depName}}"
+		},
+		{
+			"commitMessageTopic": "actionlint",
+			"matchPackageNames": ["/actionlint/"]
+		},
+		{
+			"matchDepTypes": ["engines", "peerDependencies"],
+			"enabled": false
+		},
+		{
+			"matchDepNames": ["bun", "@types/bun"],
+			"matchManagers": ["npm", "custom.regex"],
+			"groupName": "bun"
+		}
+	],
+	"customManagers": [
+		{
+			"customType": "regex",
+			"managerFilePatterns": ["/^\\.github/workflows/[^/]+\\.yml$/"],
+			"matchStrings": [
+				"run: curl -Ls( -o \\w+)? \"https://github\\.com/(?<depName>[^/]+/[^/]+)/releases/download.*\\s+env:\\s+version: \"(?<currentValue>[^\"]+)\"",
+				"https://github\\.com/(?<depName>.*?)/archive/refs/tags/v(?<currentValue>.*?)\\.tar\\.gz"
+			],
+			"datasourceTemplate": "github-releases",
+			"extractVersionTemplate": "^v(?<version>.*)$"
+		},
+		{
+			"customType": "regex",
+			"managerFilePatterns": ["**/package.json"],
+			"matchStrings": ["\"packageManager\":\\s*\"(?<depName>bun)@(?<currentValue>[^\"]+)\""],
+			"datasourceTemplate": "npm",
+			"depNameTemplate": "bun"
+		}
+	],
+	"rebaseWhen": "never",
+	"labels": ["Dependencies"],
+	"prBodyTemplate": "{{{header}}}{{{table}}}{{{notes}}}{{{changelogs}}}{{{controls}}}{{{footer}}}",
+	"prHeader": "",
+	"prFooter": ""
+}
