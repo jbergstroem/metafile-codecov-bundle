@@ -1,0 +1,74 @@
+name: test
+on:
+  pull_request:
+    paths:
+      - .github/workflows/test.yml
+      - packages/**
+      - examples/**
+      - package.json
+      - bun.lock
+      - bunfig.toml
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/test.yml
+      - packages/**
+      - examples/**
+      - package.json
+      - bun.lock
+      - bunfig.toml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
+        with:
+          bun-version-file: package.json
+      - run: bun ci
+      - run: bun test --reporter=junit --reporter-outfile=junit.xml --coverage --coverage-reporter=lcov --coverage-dir=coverage
+      - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        if: ${{ !cancelled() }}
+        with:
+          use_oidc: true
+          files: ./coverage/lcov.info
+          disable_search: true
+      - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        if: ${{ !cancelled() }}
+        with:
+          use_oidc: true
+          report_type: test_results
+          files: ./junit.xml
+          disable_search: true
+      - run: bun build --target=node --outdir=packages/metafile-codecov/dist --metafile=metafile.json packages/metafile-codecov/index.ts packages/metafile-codecov/src/cli.ts
+        if: ${{ !cancelled() }}
+      - run: bun packages/metafile-codecov/src/cli.ts --metafile=metafile.json --bundle-name=metafile-codecov-bundle --output-dir=packages/metafile-codecov/dist --upload
+        if: ${{ !cancelled() }}
+
+  e2e:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
+        with:
+          bun-version-file: package.json
+      - run: bun ci
+      - run: bun run build
+      - run: bun run --filter '*' --parallel test:e2e

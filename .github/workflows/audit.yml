@@ -1,0 +1,74 @@
+name: audit
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    outputs:
+      workflows: ${{ steps.filter.outputs.workflows_any_changed }}
+      code: ${{ steps.filter.outputs.code_any_changed }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: tj-actions/changed-files@e0021407031f5be11a464abee9a0776171c79891 # v47.0.1
+        id: filter
+        with:
+          files_yaml: |
+            workflows:
+              - .github/workflows/**
+              - .github/matchers/**
+            code:
+              - packages/**/*.ts
+              - package.json
+              - bun.lock
+              - knip.json
+
+  actionlint:
+    needs: [changes]
+    if: needs.changes.outputs.workflows == 'true'
+    runs-on: ubuntu-slim
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - run: curl -Ls "https://github.com/rhysd/actionlint/releases/download/v${{ env.version }}/actionlint_${{ env.version }}_linux_amd64.tar.gz" | sudo tar -x -z -C /usr/local/bin actionlint
+        env:
+          version: "1.7.10"
+      - run: |
+          echo "::add-matcher::.github/matchers/actionlint.json"
+          actionlint -color
+
+  knip:
+    needs: [changes]
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
+        with:
+          bun-version-file: package.json
+      - run: bun ci
+      - run: bun run knip

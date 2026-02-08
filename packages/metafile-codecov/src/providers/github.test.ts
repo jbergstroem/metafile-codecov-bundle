@@ -131,7 +131,7 @@ describe("getServiceParams", () => {
 describe("fetchOidcToken", () => {
 	const oidcEnv = {
 		ACTIONS_ID_TOKEN_REQUEST_URL: "https://token.actions.githubusercontent.com/id?api-version=1",
-		ACTIONS_RUNTIME_TOKEN: "runtime-bearer-token",
+		ACTIONS_ID_TOKEN_REQUEST_TOKEN: "runtime-bearer-token",
 	};
 
 	test("fetches token with correct URL and headers", async () => {
@@ -162,12 +162,12 @@ describe("fetchOidcToken", () => {
 		);
 	});
 
-	test("throws when ACTIONS_RUNTIME_TOKEN is missing", async () => {
+	test("throws when ACTIONS_ID_TOKEN_REQUEST_TOKEN is missing", async () => {
 		const fakeFetcher = ((_url: string | URL | Request, _init?: RequestInit) =>
 			Promise.resolve(new Response("{}"))) as typeof globalThis.fetch;
 		const env = { ACTIONS_ID_TOKEN_REQUEST_URL: "https://example.com" };
 		await expect(fetchOidcToken(env, fakeFetcher)).rejects.toThrow(
-			"ACTIONS_RUNTIME_TOKEN is not set",
+			"ACTIONS_ID_TOKEN_REQUEST_TOKEN is not set",
 		);
 	});
 

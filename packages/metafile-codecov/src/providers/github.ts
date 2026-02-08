@@ -109,9 +109,9 @@ export const fetchOidcToken = async (
 		);
 	}
 
-	const runtimeToken = env.ACTIONS_RUNTIME_TOKEN;
+	const runtimeToken = env.ACTIONS_ID_TOKEN_REQUEST_TOKEN ?? env.ACTIONS_RUNTIME_TOKEN;
 	if (!runtimeToken) {
-		throw new Error("ACTIONS_RUNTIME_TOKEN is not set");
+		throw new Error("ACTIONS_ID_TOKEN_REQUEST_TOKEN is not set");
 	}
 
 	const url = `${requestUrl}&audience=${OIDC_AUDIENCE}`;
