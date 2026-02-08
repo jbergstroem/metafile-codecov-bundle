@@ -6,8 +6,7 @@ metafile output to
 
 Both bun and esbuild produce an identical metafile JSON format describing
 the build. This package transforms that into Codecov's v3 bundle analysis
-payload, which can then be uploaded via the
-[Codecov GitHub Action](https://github.com/codecov/codecov-action).
+payload and can upload it directly using GitHub Actions OIDC.
 
 ## Installation
 
