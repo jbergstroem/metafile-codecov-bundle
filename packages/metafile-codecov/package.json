@@ -18,7 +18,7 @@
 		"url": "git+https://github.com/jbergstroem/metafile-codecov-bundle.git"
 	},
 	"bin": {
-		"metafile-codecov": "./dist/src/cli.js"
+		"metafile-codecov": "dist/src/cli.js"
 	},
 	"files": [
 		"dist",
