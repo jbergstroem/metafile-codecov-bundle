@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import type { Metafile } from "./types";
 import { version as VERSION } from "../package.json";
@@ -132,7 +134,9 @@ export const runUpload = async (
 };
 
 // Run when executed directly
-const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, "/"));
+const isMain =
+	process.argv[1] &&
+	realpathSync(resolve(process.argv[1])) === realpathSync(fileURLToPath(import.meta.url));
 if (isMain) {
 	(async () => {
 		const result = run(process.argv.slice(2));
