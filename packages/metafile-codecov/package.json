@@ -1,6 +1,6 @@
 {
 	"name": "metafile-codecov-bundle",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Convert bun or esbuild metafile output to Codecov bundle analysis format",
 	"keywords": [
 		"bun",
